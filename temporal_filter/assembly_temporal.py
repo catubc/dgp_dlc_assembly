@@ -7,8 +7,7 @@ import tensorflow.contrib.slim as slim
 from tqdm import tqdm
 import yaml
 from deeplabcut.pose_estimation_tensorflow.nnet.net_factory import pose_net
-from plot import create_annotated_movie
-from graphpose.utils_model import get_train_config
+from util import create_annotated_movie, get_train_config
 from deeplabcut.pose_estimation_tensorflow.nnet.pose_net import prediction_layer
 from deeplabcut.utils import auxiliaryfunctions
 
@@ -19,7 +18,6 @@ else:
     TF = tf
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
-
 
 # %% util functions
 def calculate_peaks(numparts, heatmap_avg):

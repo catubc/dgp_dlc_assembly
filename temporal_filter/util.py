@@ -7,7 +7,32 @@ from skimage.draw import circle
 from skimage.util import img_as_ubyte
 from tqdm import tqdm
 import yaml
+from deeplabcut.utils import auxiliaryfunctions
+from deeplabcut.pose_estimation_tensorflow.config import load_config
+from pathlib import Path
 
+
+def get_train_config(cfg, shuffle=0):
+    project_path = cfg['project_path']
+    iteration = cfg['iteration']
+    TrainingFraction = cfg['TrainingFraction'][iteration]
+    modelfolder = os.path.join(
+        project_path,
+        str(auxiliaryfunctions.GetModelFolder(TrainingFraction, shuffle, cfg)))
+
+    path_test_config = Path(modelfolder) / 'train' / 'pose_cfg.yaml'
+    print(path_test_config)
+
+    try:
+        dlc_cfg = load_config(str(path_test_config))
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            "It seems the model for shuffle %s and trainFraction %s does not exist."
+            % (shuffle, TrainingFraction))
+    # from get_model_config
+    dlc_cfg.video_path = cfg['video_path']
+    dlc_cfg.project_path = cfg['project_path']
+    return dlc_cfg
 
 
 def get_clip_frames(clip, frames_idxs, num_channels=3):
