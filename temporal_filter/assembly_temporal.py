@@ -84,15 +84,13 @@ def temporal_filter_first(markers, na, adds):
                 move_marker += [np.sum(move_marker_i)]
             move_marker = np.array(move_marker)
             move_marker[np.isnan(move_marker)] = 1e10  # if the movement is nan, set it to be 1e10
-            move_marker_valid_ind = np.where(move_marker <= wt_bound)[
-                0]  # pick the ids whose movement is below wt_bound
+            move_marker_valid_ind = np.where(move_marker <= wt_bound)[0]  # pick the ids whose movement is below wt_bound
             if len(move_marker_valid_ind) == 0:  # if all movements are not valid
                 marker_i = marker_previous1
             else:
                 cl_valid = cl[move_marker_valid_ind]
                 cl_valid_ind = np.where(cl_valid > cl_bound)[0]
-                if len(
-                        cl_valid_ind) == 0:  # if all of the confidence levels are below 0.7, pick the id with the highest confidence level
+                if len(cl_valid_ind) == 0:  # if all of the confidence levels are below 0.7, pick the id with the highest confidence level
                     selected_id = np.argmax(cl_valid)
                     selected_id = move_marker_valid_ind[selected_id]
                 else:  # for all confidence levels which are above 0.7, pick the id with the smallest movement
@@ -102,8 +100,7 @@ def temporal_filter_first(markers, na, adds):
                     selected_id = move_marker_valid_cl[selected_id]
 
                 marker_i = marker_current[selected_id, :]
-                markers_temp[frame_id, selected_id, part_id,
-                :] = np.nan  # set the identity to be nan if it's already selected
+                markers_temp[frame_id, selected_id, part_id, :] = np.nan  # set the identity to be nan if it's already selected
 
             marker_previous = np.copy(marker_i)
             markers_filter[frame_id, animal_id, part_id, :] = marker_i
@@ -138,13 +135,11 @@ def temporal_filter_second(markers, na, adds):
                 move_marker += [np.sum(move_marker_i)]
             move_marker = np.array(move_marker)
             move_marker[np.isnan(move_marker)] = 1e10  # if the movement is nan, set it to be 1e10
-            move_marker_valid_ind = np.where(move_marker <= wt_bound)[
-                0]  # pick the ids whose movement is below wt_bound
+            move_marker_valid_ind = np.where(move_marker <= wt_bound)[0]  # pick the ids whose movement is below wt_bound
             if len(move_marker_valid_ind) > 0:  # if at least one of the movements is valid
                 cl_valid = cl[move_marker_valid_ind]
                 cl_valid_ind = np.where(cl_valid > cl_bound)[0]
-                if len(
-                        cl_valid_ind) == 0:  # if all of the confidence levels are below 0.7, pick the id with the highest confidence level
+                if len(cl_valid_ind) == 0:  # if all of the confidence levels are below 0.7, pick the id with the highest confidence level
                     selected_id_sortlist = np.argsort(-cl_valid)
                     selected_id_sortlist = move_marker_valid_ind[selected_id_sortlist]
                 else:
@@ -196,7 +191,7 @@ def temporal_filter_second(markers, na, adds):
                     candidate_utm = np.where(candidate_column == utm)[0]
                     candidate_utm = list(candidate_utm)
                     candidate_move_c = candidate_move[:, c].copy()  # get the candidate movement in column c
-                    candidate_move_c[assigned_list] = 1e10  # if one id is already assigne, set the move to be 1e10
+                    candidate_move_c[assigned_list] = 1e10  # if one id is already assigned, set the move to be 1e10
                     candidate_move_utm = candidate_move_c[candidate_utm]
                     min_ind = np.argmin(candidate_move_utm)
                     candiate_utm_min = candidate_utm[min_ind]
