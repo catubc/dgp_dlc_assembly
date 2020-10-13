@@ -60,8 +60,7 @@ def zero2nan(x):
 
 def temporal_filter_first(markers, na, adds):
     # filter the traces for the first time
-    markers_cen = markers[:, :, centroid, None, :]
-    markers_temp = np.copy(markers_cen)
+    markers_temp = np.copy(markers)
     markers_filter = np.copy(markers_temp)
     end_frame = markers_temp.shape[0]
     wt_bound = 20  # upper bound of the distance that a marker can move between two frames
@@ -364,7 +363,8 @@ markers = np.flip(markers, 3)
 
 # %%
 # filter the traces for the first time
-markers_filter = temporal_filter_first(markers, na, adds)
+markers_cen = markers[:, :, centroid, None, :]
+markers_filter = temporal_filter_first(markers_cen, na, adds)
 
 # %% find the top na traces with the highest confidence levels
 top_n = na
