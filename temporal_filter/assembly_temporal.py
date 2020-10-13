@@ -314,8 +314,6 @@ sess.run(TF.local_variables_initializer())
 restorer.restore(sess, dlc_cfg.init_weights)
 
 # %% collect traces for test video
-## Calculate ELBO
-# %
 # -------------------
 # extract pose
 # -------------------
@@ -355,7 +353,7 @@ for i in range(n_frames):
             len_peak = len(peak_i)
             if len_peak < na + adds:
                 peak_i = np.vstack((np.zeros((na + adds - len_peak, 4)), peak_i))
-            peak_i = peak_i[-na - adds:, :]
+            peak_i = peak_i[(-na - adds):, :]
             peak_i = peak_i[:, :3]
             peak_i = np.flip(peak_i, 0)
             markers[i, :, ind, :] = peak_i
