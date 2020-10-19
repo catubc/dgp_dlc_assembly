@@ -221,7 +221,7 @@ snapshot = 'snapshot-100000'
 # project path
 dlcpath = '/Users/yzhao301/GoogleDriveAnqi/CU_Research/deepgraphpose_kelly/data/mice4/model_data/mice4-cat-2020-07-15'
 # the path to the test video
-test_video = '/Users/yzhao301/GoogleDriveAnqi/CU_Research/deepgraphpose_kelly/data/mice4/model_data/mice4-cat-2020-07-15/videos/dgp/mice4_test1.mp4'
+test_video = '/Users/yzhao301/GoogleDriveAnqi/CU_Research/deepgraphpose_kelly/data/mice4/model_data/mice4-cat-2020-07-15/videos/dgp/mice4_test2.mp4'
 
 shuffle = 1
 dlc_base_path = Path(dlcpath)
